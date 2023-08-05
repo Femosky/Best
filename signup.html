@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up | Best</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/signup.css">
+    <script src="scripts/signup.js" defer></script>
+</head>
+<body>
+    <header class="primary-header">
+        <p class="logo">BEST</p>
+        <div class="cta">
+            <button class="button nav-login-button">Login</button>
+            <button class="button nav-signup-button">Sign up</button>
+        </div>
+    </header>
+    <section class="padding-block-900">
+        <div class="container">
+            <div class="even-columns">
+                <div class="phone-screen">
+                    <img src="images/iPhone.png" alt="">
+                </div>
+                <div class="signup-form">
+                    <form action="">
+                        <h4>First name</h4>
+                        <input class="js-first-name" type="text" placeholder="First name">
+
+                        <h4>Surname</h4>
+                        <input class="js-surname" type="text" placeholder="Surname">
+                        
+                        <h4>Email address</h4>
+                        <input class="js-email-address" onkeyup="handleInput(event); checkEmail(event)" type="text" placeholder="Enter your email address">
+                        <p class="js-email-warner warner"></p>
+                        
+                        <h4>Password</h4>
+                        <input class="js-password" onkeyup="handleInput(event); checkPasswordCriteria(event);" type="text" placeholder="••••••••••••">
+                        <p class="js-password-warner warner"></p>
+                        
+                        <h4>Confirm password</h4>
+                        <input class="js-comfirm-password" onkeyup="handleInput(event);" type="text" placeholder="••••••••••••">
+                        <p class="js-password-match-warner warner"></p>
+
+                        <button class="button signup-button js-signup-button" onclick="createUser(event);">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
