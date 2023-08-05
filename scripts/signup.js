@@ -1,147 +1,107 @@
-const emailWarner = document.querySelector(".js-emailWarner");
-const passwordWarner = document.querySelector(".js-password-warner");
-const passwordMatchWarner = document.querySelector(".js-password-match-warner");
+const emailWarner = document.querySelector('.js-emailWarner');
+const passwordWarner = document.querySelector('.js-password-warner');
+const passwordMatchWarner = document.querySelector('.js-password-match-warner');
 
 const existingEmailAddress = "blah blah blah";
 
 function handleInput(event) {
-  const inputValue = event.target.value;
-  return inputValue;
+    const inputValue = event.target.value;
+    return inputValue;
 }
 
 function checkEmail(event) {
-  const inputValue = handleInput(event);
-  let emailSuccess = null;
+    const inputValue = handleInput(event);
+    let emailSuccess = null;
+    
+    if (inputValue === existingEmailAddress) {
+        emailSuccess = true;
+    } else {
+        emailSuccess = false;
+        emailWarner.innerHTML = 'Email address already belongs to an account';
+    }
 
-  if (inputValue === existingEmailAddress) {
-    emailSuccess = true;
-  } else {
-    emailSuccess = false;
-    emailWarner.innerHTML = "Email address already belongs to an account";
-  }
-
-  return emailSuccess;
+    return emailSuccess;
 }
 
 function checkSpecialCharacter(event) {
-  const inputValue = handleInput(event);
-  const specialCharacters = [
-    "!",
-    "@",
-    "#",
-    "$",
-    "%",
-    "^",
-    "&",
-    "*",
-    "(",
-    ")",
-    "-",
-    "_",
-    "=",
-    "+",
-    "`",
-    "~",
-    ",",
-    ".",
-    "<",
-    ">",
-    "/",
-    "?",
-    "[",
-    "]",
-    "{",
-    "}",
-    "|",
-    ";",
-    ":",
-    '"',
-    "'",
-  ];
-  const containsSpecialCharacter = specialCharacters.some((character) =>
-    inputValue.includes(character)
-  );
-
-  return containsSpecialCharacter;
+    const inputValue = handleInput(event);
+    const specialCharacters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '`', '~', ',', '.', '<', '>', '/', '?', '[', ']', '{', '}', '|', ';', ':', '"', "'"];
+    const containsSpecialCharacter = specialCharacters.some(character => inputValue.includes(character));
+    
+    return containsSpecialCharacter;
 }
 
 function checkCapitalLetter(event) {
-  const inputValue = handleInput(event);
-  const regExp = /[A-Z]/;
-  const capitalLetter = regExp.test(inputValue);
+    const inputValue = handleInput(event); 
+    const regExp = /[A-Z]/;
+    const capitalLetter = regExp.test(inputValue);
 
-  return capitalLetter;
+    return capitalLetter;
 }
 
 function checkNumber(event) {
-  const inputValue = handleInput(event);
-  const numberPresent = !isNaN(inputValue);
+    const inputValue = handleInput(event);
+    const numberPresent = !isNaN(inputValue);
 
-  return numberPresent;
+    return numberPresent;
 }
 
 function checkPasswordCriteria(event) {
-  const inputValue = handleInput(event);
-  const containsSpecialCharacter = checkSpecialCharacter(event);
-  const capitalLetter = checkCapitalLetter(event);
-  const numberPresent = checkNumber(event);
+    const inputValue = handleInput(event);
+    const containsSpecialCharacter = checkSpecialCharacter(event);
+    const capitalLetter = checkCapitalLetter(event);
+    const numberPresent = checkNumber(event);
 
-  let passwordCriteria = null;
+    let passwordCriteria = null;
 
-  if (
-    containsSpecialCharacter &&
-    capitalLetter &&
-    numberPresent &&
-    inputValue.length >= 8
-  ) {
-    passwordCriteria = true;
-  } else {
-    passwordCriteria = false;
-    passwordWarner.innerHTML =
-      "Passwords must be up to 8 characters and must contain at least a capital letter, number, symbols";
-  }
+    if (containsSpecialCharacter && capitalLetter && numberPresent && inputValue.length >= 8) {
+        passwordCriteria = true;
+    } else {
+        passwordCriteria = false;
+        passwordWarner.innerHTML = 'Passwords must be up to 8 characters and must contain at least a capital letter, number, symbols';
+    }
 
-  return passwordCriteria;
+    return passwordCriteria;
 }
 
 function checkPasswordMatch(event) {
-  const inputValue = handleInput(event);
-  const passwordCriteria = checkPasswordCriteria(event);
-
-  let passwordsMatch = null;
-
-  if (passwordCriteria) {
-    if (inputValue === document.querySelector(".js-password").value) {
-      passwordsMatch = true;
-    } else {
-      passwordsMatch = false;
-      passwordMatchWarner.innerHTML = "Incorrect. Passwords not matching";
+    const inputValue = handleInput(event);
+    const passwordCriteria = checkPasswordCriteria(event);
+    
+    let passwordsMatch = null;
+    
+    if (passwordCriteria) {
+        if (inputValue === document.querySelector('.js-password').value) {
+            passwordsMatch = true;
+        } else {
+            passwordsMatch = false;
+            passwordMatchWarner.innerHTML = 'Incorrect. Passwords not matching';
+        }
     }
-  }
-
-  return passwordsMatch;
+    
+    return passwordsMatch;
 }
 
 function createUser(event) {
-  const emailSuccess = checkEmail(event);
-  const passwordsMatch = checkPasswordMatch(event);
+    const emailSuccess = checkEmail(event);
+    const passwordsMatch = checkPasswordMatch(event);
+    
+    let users = [];
+    let userData = {};
+    
+    if (emailSuccess && passwordsMatch) {
+        const firstName = document.querySelector('.js-first-name').value;
+        const surname = document.querySelector('.js-surname').value;
+        const emailAddress = document.querySelector('js-email-address').value;
+        const password = document.querySelector('.js-password').value;
 
-  let users = [];
-  let userData = {};
+        userData.firstName = firstName;
+        userData.surname = surname;
+        userData.emailAddress = emailAddress;
+        userData.password = password;
 
-  if (emailSuccess && passwordsMatch) {
-    const firstName = document.querySelector(".js-first-name").value;
-    const surname = document.querySelector(".js-surname").value;
-    const emailAddress = document.querySelector("js-email-address").value;
-    const password = document.querySelector(".js-password").value;
-
-    userData.firstName = firstName;
-    userData.surname = surname;
-    userData.emailAddress = emailAddress;
-    userData.password = password;
-
-    users.push(userData);
-  }
-
-  return users;
+        users.push(userData);
+    }
+    
+    return users;
 }
