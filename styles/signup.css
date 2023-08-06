@@ -56,11 +56,19 @@
 
 /* hiddens */
 
-.error {
-  color: red;
+.input-control input:focus {
+  outline: 0;
 }
-.success {
-  color: green;
+.input-control.success input {
+  border-color: green;
+}
+.input-control.error input {
+  border-color: red;
+}
+.input-control .error {
+  color: red;
+  font-size: 9px;
+  height:
 }
 
 /* main */

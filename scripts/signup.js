@@ -71,5 +71,9 @@ const validateInputs = () => {
 
     if (confirmPasswordValue === '') {
         setError(confirmPassword, 'Please confirm your password');
-    } else if (passwordValue)
+    } else if (confirmPasswordValue !== passwordValue) {
+        setError(confirmPassword, 'Passwords do not match');
+    } else {
+        setSuccess(confirmPassword);
+    }
 } ;
