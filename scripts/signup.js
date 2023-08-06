@@ -5,9 +5,11 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm-password');
 
+const debugOutput = document.querySelector('.debug-output');
+
 form.addEventListener('submit', e => {
     e.preventDefault();
-
+    
     validateInputs();
 });
 
@@ -20,16 +22,17 @@ const setError = (element, message) => {
     inputControl.classList.remove('success');
 }
 
-const setSuccess = element => {
+const setSuccess = element => {   
     const inputControl = element.parentElement;
     const errorDisplay = inputControl.querySelector('.error');
 
     errorDisplay.innerText = '';
     inputControl.classList.add('success');
     inputControl.classList.remove('error');
+    window.location.href = 'verify-email.html';
 }
 
-const isEmailValid = () => {
+const isEmailValid = email => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 };
@@ -39,17 +42,22 @@ const validateInputs = () => {
     const surnameValue = surname.value.trim();
     const emailValue = email.value.trim();
     const passwordValue = password.value.trim();
-    const confirmPasswordValue = password.value.trim();
+    const confirmPasswordValue = confirmPassword.value.trim();
+
+    let user = [];
+    let userData = {}
 
     if (firstNameValue === '') {
         setError(firstName, 'First name is required');
     } else {
+        userData.firstNameValue = firstNameValue;
         setSuccess(firstName);
     }
 
     if (surnameValue === '') {
         setError(surname, 'Surname is required');
     } else {
+        userData.surnameValue = surnameValue;
         setSuccess(surname);
     }
 
@@ -58,6 +66,7 @@ const validateInputs = () => {
     } else if (!isEmailValid(emailValue)) {
         setError(email, 'Provide a valid email');
     } else {
+        userData.emailValue = emailValue;
         setSuccess(email);
     }
 
@@ -66,6 +75,7 @@ const validateInputs = () => {
     } else if (passwordValue.length < 8) {
         setError(password, 'Password must be at least 8 characters');
     } else {
+        userData.passwordValue = passwordValue;
         setSuccess(password);
     }
 
@@ -76,4 +86,7 @@ const validateInputs = () => {
     } else {
         setSuccess(confirmPassword);
     }
+
+    user.push(userData);
+    // debugOutput.innerText = userData.passwordValue;
 } ;
