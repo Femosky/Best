@@ -56,8 +56,11 @@
 
 /* hiddens */
 
-.warner {
+.error {
   color: red;
+}
+.success {
+  color: green;
 }
 
 /* main */

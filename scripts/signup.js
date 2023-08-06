@@ -1,107 +1,75 @@
-const emailWarner = document.querySelector('.js-emailWarner');
-const passwordWarner = document.querySelector('.js-password-warner');
-const passwordMatchWarner = document.querySelector('.js-password-match-warner');
+const form = document.getElementById('form');
+const firstName = document.getElementById('first-name');
+const surname = document.getElementById('surname');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirm-password');
 
-const existingEmailAddress = "blah blah blah";
+form.addEventListener('submit', e => {
+    e.preventDefault();
 
-function handleInput(event) {
-    const inputValue = event.target.value;
-    return inputValue;
+    validateInputs();
+});
+
+const setError = (element, message) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = message;
+    inputControl.classList.add('error');
+    inputControl.classList.remove('success');
 }
 
-function checkEmail(event) {
-    const inputValue = handleInput(event);
-    let emailSuccess = null;
-    
-    if (inputValue === existingEmailAddress) {
-        emailSuccess = true;
+const setSuccess = element => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = '';
+    inputControl.classList.add('success');
+    inputControl.classList.remove('error');
+}
+
+const isEmailValid = () => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+};
+
+const validateInputs = () => {
+    const firstNameValue = firstName.value.trim();
+    const surnameValue = surname.value.trim();
+    const emailValue = email.value.trim();
+    const passwordValue = password.value.trim();
+    const confirmPasswordValue = password.value.trim();
+
+    if (firstNameValue === '') {
+        setError(firstName, 'First name is required');
     } else {
-        emailSuccess = false;
-        emailWarner.innerHTML = 'Email address already belongs to an account';
+        setSuccess(firstName);
     }
 
-    return emailSuccess;
-}
-
-function checkSpecialCharacter(event) {
-    const inputValue = handleInput(event);
-    const specialCharacters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '`', '~', ',', '.', '<', '>', '/', '?', '[', ']', '{', '}', '|', ';', ':', '"', "'"];
-    const containsSpecialCharacter = specialCharacters.some(character => inputValue.includes(character));
-    
-    return containsSpecialCharacter;
-}
-
-function checkCapitalLetter(event) {
-    const inputValue = handleInput(event); 
-    const regExp = /[A-Z]/;
-    const capitalLetter = regExp.test(inputValue);
-
-    return capitalLetter;
-}
-
-function checkNumber(event) {
-    const inputValue = handleInput(event);
-    const numberPresent = !isNaN(inputValue);
-
-    return numberPresent;
-}
-
-function checkPasswordCriteria(event) {
-    const inputValue = handleInput(event);
-    const containsSpecialCharacter = checkSpecialCharacter(event);
-    const capitalLetter = checkCapitalLetter(event);
-    const numberPresent = checkNumber(event);
-
-    let passwordCriteria = null;
-
-    if (containsSpecialCharacter && capitalLetter && numberPresent && inputValue.length >= 8) {
-        passwordCriteria = true;
+    if (surnameValue === '') {
+        setError(surname, 'Surname is required');
     } else {
-        passwordCriteria = false;
-        passwordWarner.innerHTML = 'Passwords must be up to 8 characters and must contain at least a capital letter, number, symbols';
+        setSuccess(surname);
     }
 
-    return passwordCriteria;
-}
-
-function checkPasswordMatch(event) {
-    const inputValue = handleInput(event);
-    const passwordCriteria = checkPasswordCriteria(event);
-    
-    let passwordsMatch = null;
-    
-    if (passwordCriteria) {
-        if (inputValue === document.querySelector('.js-password').value) {
-            passwordsMatch = true;
-        } else {
-            passwordsMatch = false;
-            passwordMatchWarner.innerHTML = 'Incorrect. Passwords not matching';
-        }
+    if (emailValue === '') {
+        setError(email, 'Email address is required');
+    } else if (!isEmailValid(emailValue)) {
+        setError(email, 'Provide a valid email');
+    } else {
+        setSuccess(email);
     }
-    
-    return passwordsMatch;
-}
 
-function createUser(event) {
-    const emailSuccess = checkEmail(event);
-    const passwordsMatch = checkPasswordMatch(event);
-    
-    let users = [];
-    let userData = {};
-    
-    if (emailSuccess && passwordsMatch) {
-        const firstName = document.querySelector('.js-first-name').value;
-        const surname = document.querySelector('.js-surname').value;
-        const emailAddress = document.querySelector('js-email-address').value;
-        const password = document.querySelector('.js-password').value;
-
-        userData.firstName = firstName;
-        userData.surname = surname;
-        userData.emailAddress = emailAddress;
-        userData.password = password;
-
-        users.push(userData);
+    if (passwordValue === '') {
+        setError(password, 'Password is required');
+    } else if (passwordValue.length < 8) {
+        setError(password, 'Password must be at least 8 characters');
+    } else {
+        setSuccess(password);
     }
-    
-    return users;
-}
+
+    if (confirmPasswordValue === '') {
+        setError(confirmPassword, 'Please confirm your password');
+    } else if (passwordValue)
+} ;

@@ -26,29 +26,42 @@
         <div class="container">
             <div class="even-columns">
                 <div class="phone-screen">
-                    <img src="images/iPhone.png" alt="">
+                    <!-- <img src="images/iPhone.png" alt=""> -->
                 </div>
                 <div class="signup-form">
-                    <form action="">
-                        <h4>First name</h4>
-                        <input class="js-first-name" type="text" placeholder="First name">
+                    <form id="form" action="/">
+                        <div class="input-control">
+                            <label for="first name">First name</label>
+                            <input id="first-name" name="first name" type="text" placeholder="First name">
+                            <div class="error"></div>
+                        </div>
 
-                        <h4>Surname</h4>
-                        <input class="js-surname" type="text" placeholder="Surname">
-                        
-                        <h4>Email address</h4>
-                        <input class="js-email-address" onkeyup="handleInput(event); checkEmail(event)" type="text" placeholder="Enter your email address">
-                        <p class="js-email-warner warner"></p>
-                        
-                        <h4>Password</h4>
-                        <input class="js-password" onkeyup="handleInput(event); checkPasswordCriteria(event);" type="text" placeholder="••••••••••••">
-                        <p class="js-password-warner warner"></p>
-                        
-                        <h4>Confirm password</h4>
-                        <input class="js-comfirm-password" onkeyup="handleInput(event);" type="text" placeholder="••••••••••••">
-                        <p class="js-password-match-warner warner"></p>
+                        <div class="input-control">
+                            <label for="surname">Surname</label>
+                            <input id="surname" name="surname" type="text" placeholder="Surname">
+                            <div class="error"></div>
+                        </div>
 
-                        <button class="button signup-button js-signup-button" onclick="createUser(event);">Sign up</button>
+                        <div class="input-control">
+                            <label for="email">Email address</label>
+                            <input id="email" type="text" placeholder="Enter your email address">
+                            <div class="error"></div>
+                        </div>
+
+                        <div class="input-control">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" placeholder="••••••••••••">
+                            <div class="error"></div>
+                        </div>
+
+                        <div class="input-control">
+                            <label for="password">Confirm password</label>
+                            <input id="confirm-password" type="password" placeholder="••••••••••••">
+                            <div class="error"></div>
+                        </div>
+
+                        <button type="submit" class="button signup-button js-signup-button">Sign up</button>
+                        <p class="debug-output"></p>
                     </form>
                 </div>
             </div>
