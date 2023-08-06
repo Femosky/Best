@@ -1,6 +1,8 @@
 const form = document.getElementById('form');
+
 const firstName = document.getElementById('first-name');
 const surname = document.getElementById('surname');
+
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm-password');
@@ -29,7 +31,7 @@ const setSuccess = element => {
     errorDisplay.innerText = '';
     inputControl.classList.add('success');
     inputControl.classList.remove('error');
-    window.location.href = 'verify-email.html';
+    // window.location.href = 'verify-email.html';
 }
 
 const isEmailValid = email => {
@@ -88,5 +90,11 @@ const validateInputs = () => {
     }
 
     user.push(userData);
-    // debugOutput.innerText = userData.passwordValue;
+    debugOutput.innerHTML = `
+        <p>Stored user info: </p>
+        <p>first name: ${userData.firstNameValue}</p>
+        <p>surname: ${userData.surnameValue}</p>
+        <p>email: ${userData.emailValue}</p>
+        <p>password: ${userData.passwordValue}</p>
+    `;
 } ;

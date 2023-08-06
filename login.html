@@ -8,6 +8,41 @@
     <script src="scripts/login.js" defer></script>
 </head>
 <body>
-    <h1>LOGIN PAGE</h1>
+    <header class="primary-header">
+        <p class="logo">BEST</p>
+        <div class="cta">
+            <button class="button nav-login-button">Login</button>
+            <button class="button nav-signup-button">Sign up</button>
+        </div>
+    </header>
+    <section class="padding-block-900">
+        <div class="container">
+            <div class="even-columns">
+                <div class="phone-screen">
+                    <!-- <img src="images/iPhone.png" alt=""> -->
+                </div>
+                <div class="signup-form">
+                    <form id="form" action="/">
+                        <div class="input-control">
+                            <label for="email">Email address</label>
+                            <input id="email" type="text" placeholder="Enter your email address">
+                            <div class="error"></div>
+                        </div>
+
+                        <div class="input-control">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" placeholder="••••••••••••">
+                            <div class="error"></div>
+                        </div>
+
+                        <button type="submit" class="button submit-button js-submit-button">Login</button>
+                        <p class="debug-output"></p>
+                    </form>
+
+                    <p class="debug-output"></p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
