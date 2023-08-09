@@ -91,10 +91,36 @@ const validateInputs = () => {
 
     user.push(userData);
     debugOutput.innerHTML = `
+    
         <p>Stored user info: </p>
         <p>first name: ${userData.firstNameValue}</p>
         <p>surname: ${userData.surnameValue}</p>
         <p>email: ${userData.emailValue}</p>
         <p>password: ${userData.passwordValue}</p>
     `;
-} ;
+
+    // api part - from chatGPT lol
+    
+    // Define the URL of your backend API
+    const apiUrl = "http://127.0.0.1:5000/register";
+    
+    // Send a POST request
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add other headers if needed
+      },
+      body: JSON.stringify(userData), // Convert the JSON object to a string
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the server
+        console.log("Response from server:", data);
+      })
+      .catch(error => {
+        // Handle errors
+        console.error("Error:", error);
+      });
+};
+
