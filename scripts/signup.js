@@ -1,13 +1,16 @@
 const form = document.getElementById('form');
 
 const firstName = document.getElementById('first-name');
-const surname = document.getElementById('surname');
+const lastName = document.getElementById('last-name');
 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm-password');
 
 const debugOutput = document.querySelector('.debug-output');
+const debugOutput1 = document.querySelector('.debug-output-1');
+const debugOutput2 = document.querySelector('.debug-output-2');
+const debugOutputError = document.querySelector('.debug-output-error');
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -39,30 +42,34 @@ const isEmailValid = email => {
     return re.test(String(email).toLowerCase());
 };
 
+
+// main function - to validate user sign up inputs
+
 const validateInputs = () => {
     const firstNameValue = firstName.value.trim();
-    const surnameValue = surname.value.trim();
+    const lastNameValue = lastName.value.trim();
     const emailValue = email.value.trim();
     const passwordValue = password.value.trim();
     const confirmPasswordValue = confirmPassword.value.trim();
 
     let user = [];
-    let userData = {}
-
+    let userData = {};
+    // const userData = new userData(form);
+    
     if (firstNameValue === '') {
         setError(firstName, 'First name is required');
     } else {
         userData.firstNameValue = firstNameValue;
         setSuccess(firstName);
     }
-
-    if (surnameValue === '') {
-        setError(surname, 'Surname is required');
+    
+    if (lastNameValue === '') {
+        setError(lastName, 'Last name is required');
     } else {
-        userData.surnameValue = surnameValue;
-        setSuccess(surname);
+        userData.lastNameValue = lastNameValue;
+        setSuccess(lastName);
     }
-
+    
     if (emailValue === '') {
         setError(email, 'Email address is required');
     } else if (!isEmailValid(emailValue)) {
@@ -71,7 +78,7 @@ const validateInputs = () => {
         userData.emailValue = emailValue;
         setSuccess(email);
     }
-
+    
     if (passwordValue === '') {
         setError(password, 'Password is required');
     } else if (passwordValue.length < 8) {
@@ -80,7 +87,7 @@ const validateInputs = () => {
         userData.passwordValue = passwordValue;
         setSuccess(password);
     }
-
+    
     if (confirmPasswordValue === '') {
         setError(confirmPassword, 'Please confirm your password');
     } else if (confirmPasswordValue !== passwordValue) {
@@ -88,39 +95,53 @@ const validateInputs = () => {
     } else {
         setSuccess(confirmPassword);
     }
-
+    
     user.push(userData);
-    debugOutput.innerHTML = `
-    
-        <p>Stored user info: </p>
-        <p>first name: ${userData.firstNameValue}</p>
-        <p>surname: ${userData.surnameValue}</p>
-        <p>email: ${userData.emailValue}</p>
-        <p>password: ${userData.passwordValue}</p>
-    `;
 
-    // api part - from chatGPT lol
-    
-    // Define the URL of your backend API
-    const apiUrl = "http://127.0.0.1:5000/register";
-    
-    // Send a POST request
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Add other headers if needed
-      },
-      body: JSON.stringify(userData), // Convert the JSON object to a string
+    // const data = Object.fromEntries(userData);
+
+    // fetch('http://127.0.0.1:5000/register', {
+    fetch('https://socialmediaapp-ugrr.onrender.com/api/docs/#/default/routes.register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
     })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the server
-        console.log("Response from server:", data);
-      })
-      .catch(error => {
-        // Handle errors
-        console.error("Error:", error);
-      });
+        // .then(res => res.json())
+        // .then(userData => debugOutput1.innerHTML = userData)
+        // .catch(error => debugOutputError.innerHTML = error);
+    
+    // debugOutput.innerHTML = `
+    // <p>Stored user info: </p>
+    // <p>first name: ${userData.firstNameValue}</p>
+    // <p>last name: ${userData.lastNameValue}</p>
+    //     <p>email: ${userData.emailValue}</p>
+    //     <p>password: ${userData.passwordValue}</p>
+    // `;
+
+    // // api part - from chatGPT lol
+    
+    // // Define the URL of your backend API
+    // const apiUrl = "http://127.0.0.1:5000/register";
+    
+    // // Send a POST request
+    // fetch(apiUrl, {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //     // Add other headers if needed
+    //   },
+    //   body: JSON.stringify(userData), // Convert the JSON object to a string
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // Handle the response from the server
+    //     console.log("Response from server:", data);
+    //   })
+    //   .catch(error => {
+    //     // Handle errors
+    //     console.error("Error:", error);
+    //   });
 };
 
