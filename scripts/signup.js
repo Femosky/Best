@@ -104,6 +104,7 @@ const validateInputs = () => {
     fetch('https://socialmediaapp-ugrr.onrender.com/register', {
         method: 'POST',
         headers: {
+            'accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData)
