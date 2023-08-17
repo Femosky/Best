@@ -101,24 +101,32 @@ const validateInputs = () => {
     // const data = Object.fromEntries(userData);
 
     // fetch('http://127.0.0.1:5000/register', {
-    fetch('https://socialmediaapp-ugrr.onrender.com/api/docs/#/default/routes.register', {
+    fetch('https://socialmediaapp-ugrr.onrender.com/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData)
     })
-        // .then(res => res.json())
-        // .then(userData => debugOutput1.innerHTML = userData)
-        // .catch(error => debugOutputError.innerHTML = error);
+    .then(response => response.json())  // Parse the response
+    .then(data => {
+        // Handle the response from the server
+        console.log("Response from server:", data);
+        debugOutput1.innerHTML = data;
+        // You can update your UI or perform any necessary actions here
+    })
+    .catch(error => {
+        // Handle errors
+        console.error("Error:", error);
+    });
     
-    // debugOutput.innerHTML = `
-    // <p>Stored user info: </p>
-    // <p>first name: ${userData.firstNameValue}</p>
-    // <p>last name: ${userData.lastNameValue}</p>
-    //     <p>email: ${userData.emailValue}</p>
-    //     <p>password: ${userData.passwordValue}</p>
-    // `;
+    debugOutput.innerHTML = `
+    <p>Stored user info: </p>
+    <p>first name: ${userData.firstNameValue}</p>
+    <p>last name: ${userData.lastNameValue}</p>
+        <p>email: ${userData.emailValue}</p>
+        <p>password: ${userData.passwordValue}</p>
+    `;
 
     // // api part - from chatGPT lol
     
