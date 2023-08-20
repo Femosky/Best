@@ -178,6 +178,7 @@ const validateInputs = () => {
     }
     
     if (firstNameCriteria && lastNameCriteria && emailCriteria && passwordCriteria) {
+        window.location.href = 'verify-email.html';
         
         fetch('https://socialmediaapp-ugrr.onrender.com/register', {
             method: 'POST',
