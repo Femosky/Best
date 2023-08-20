@@ -12,11 +12,67 @@ const debugOutput1 = document.querySelector('.debug-output-1');
 const debugOutput2 = document.querySelector('.debug-output-2');
 const debugOutputError = document.querySelector('.debug-output-error');
 
+let passwordCounter = false;
+
+const validateFirstName = () => {
+    const firstNameValue = firstName.value.trim();
+    if (firstNameValue === '') {
+        setError(firstName, 'First name is required');
+    } else {
+        setSuccess(firstName);
+    }
+};
+
+const validateLastName = () => {
+    const lastNameValue = lastName.value.trim();
+    if (lastNameValue === '') {
+        setError(lastName, 'Last name is required');
+    } else {
+        setSuccess(lastName);
+    }
+};
+
+const validateEmail = () => {
+    const emailValue = email.value.trim();
+    if (emailValue === '') {
+        setError(email, 'Email address is required');
+    } else if (!isEmailValid(emailValue)) {
+        setError(email, 'Provide a valid email');
+    } else {
+        setSuccess(email);
+    }
+};
+
+const validatePassword = () => {
+    isPasswordValid(password);
+    validateConfirmPassword();
+};
+
+const validateConfirmPassword = () => {
+    const confirmPasswordValue = confirmPassword.value.trim();
+    const passwordValue = password.value.trim();
+
+    if (confirmPasswordValue === '') {
+        setError(confirmPassword, 'Please confirm your password');
+    } else if (confirmPasswordValue !== passwordValue) {
+        setError(confirmPassword, 'Passwords do not match');
+    } else {
+        setSuccess(confirmPassword);
+    }
+};
+
+firstName.addEventListener('keyup', validateFirstName);
+lastName.addEventListener('keyup', validateLastName);
+email.addEventListener('keyup', validateEmail);
+password.addEventListener('keyup', validatePassword);
+confirmPassword.addEventListener('keyup', validateConfirmPassword);
+
 form.addEventListener('submit', e => {
     e.preventDefault();
     
     validateInputs();
 });
+
 
 const setError = (element, message) => {
     const inputControl = element.parentElement;
@@ -42,6 +98,29 @@ const isEmailValid = email => {
     return re.test(String(email).toLowerCase());
 };
 
+const isPasswordValid = element => {
+    const passwordValue = element.value;
+
+    if (passwordValue === '') {
+        setError(password, 'Password is required');
+        return false;
+    } else if (passwordValue.length < 8) {
+        setError(password, 'Password must be at least 8 characters');
+        return false;
+    } else if (!/[A-Z]/.test(passwordValue)) {
+        setError(password, 'Password must contain at least a capital letter');
+        return false;
+    } else if (!/\d/.test(passwordValue)) {
+        setError(password, 'Password must contain at least a number');
+        return false;
+    } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(passwordValue)) {
+        setError(password, 'Password must contain at least a special character');
+        return false;
+    } else {
+        setSuccess(password);
+        return true;
+    }
+};
 
 // main function - to validate user sign up inputs
 
@@ -52,15 +131,19 @@ const validateInputs = () => {
     const passwordValue = password.value.trim();
     const confirmPasswordValue = confirmPassword.value.trim();
 
-    let user = [];
+    let firstNameCriteria = false;
+    let lastNameCriteria = false;
+    let emailCriteria = false;
+    let passwordCriteria = false;
+
     let userData = {};
-    // const userData = new userData(form);
     
     if (firstNameValue === '') {
         setError(firstName, 'First name is required');
     } else {
         userData.firstNameValue = firstNameValue;
         setSuccess(firstName);
+        firstNameCriteria = true;
     }
     
     if (lastNameValue === '') {
@@ -68,6 +151,7 @@ const validateInputs = () => {
     } else {
         userData.lastNameValue = lastNameValue;
         setSuccess(lastName);
+        lastNameCriteria = true;
     }
     
     if (emailValue === '') {
@@ -77,50 +161,46 @@ const validateInputs = () => {
     } else {
         userData.emailValue = emailValue;
         setSuccess(email);
+        emailCriteria = true;
     }
     
-    if (passwordValue === '') {
-        setError(password, 'Password is required');
-    } else if (passwordValue.length < 8) {
-        setError(password, 'Password must be at least 8 characters');
+    if (!isPasswordValid(password)) {
+        setError(confirmPassword, 'Please choose a correct password');
     } else {
-        userData.passwordValue = passwordValue;
-        setSuccess(password);
+        if (confirmPasswordValue === '') {
+            setError(confirmPassword, 'Please confirm your password');
+        } else if (confirmPasswordValue !== passwordValue) {
+            setError(confirmPassword, 'Passwords do not match');
+        } else {
+            setSuccess(confirmPassword);
+            passwordCriteria = true;
+        }
     }
     
-    if (confirmPasswordValue === '') {
-        setError(confirmPassword, 'Please confirm your password');
-    } else if (confirmPasswordValue !== passwordValue) {
-        setError(confirmPassword, 'Passwords do not match');
-    } else {
-        setSuccess(confirmPassword);
+    if (firstNameCriteria && lastNameCriteria && emailCriteria && passwordCriteria) {
+        
+        fetch('https://socialmediaapp-ugrr.onrender.com/register', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())  // Parse the response
+        .then(data => {
+            // Handle the response from the server
+            console.log("Response from server:", data);
+            debugOutput1.innerHTML = data;
+            // You can update your UI or perform any necessary actions here
+        })
+        .catch(error => {
+            // Handle errors
+            console.error("Error:", error);
+        });
+        
     }
-    
-    user.push(userData);
 
-    // const data = Object.fromEntries(userData);
-
-    // fetch('http://127.0.0.1:5000/register', {
-    fetch('https://socialmediaapp-ugrr.onrender.com/register', {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => response.json())  // Parse the response
-    .then(data => {
-        // Handle the response from the server
-        console.log("Response from server:", data);
-        debugOutput1.innerHTML = data;
-        // You can update your UI or perform any necessary actions here
-    })
-    .catch(error => {
-        // Handle errors
-        console.error("Error:", error);
-    });
-    
     debugOutput.innerHTML = `
     <p>Stored user info: </p>
     <p>first name: ${userData.firstNameValue}</p>
@@ -128,29 +208,5 @@ const validateInputs = () => {
         <p>email: ${userData.emailValue}</p>
         <p>password: ${userData.passwordValue}</p>
     `;
-
-    // // api part - from chatGPT lol
-    
-    // // Define the URL of your backend API
-    // const apiUrl = "http://127.0.0.1:5000/register";
-    
-    // // Send a POST request
-    // fetch(apiUrl, {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //     // Add other headers if needed
-    //   },
-    //   body: JSON.stringify(userData), // Convert the JSON object to a string
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // Handle the response from the server
-    //     console.log("Response from server:", data);
-    //   })
-    //   .catch(error => {
-    //     // Handle errors
-    //     console.error("Error:", error);
-    //   });
 };
 
