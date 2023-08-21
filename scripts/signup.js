@@ -35,10 +35,13 @@ const validateLastName = () => {
 
 const validateEmail = () => {
     const email = emailElement.value.trim();
+
     if (email === '') {
         setError(emailElement, 'Email address is required');
     } else if (!isEmailValid(email)) {
         setError(emailElement, 'Provide a valid email');
+    } else if (!isEmailAvailable(email)) {
+        setError(emailElement, 'Email address already belongs to an account!');
     } else {
         setSuccess(emailElement);
     }
@@ -95,10 +98,47 @@ const setSuccess = element => {
     // window.location.href = 'verify-email.html';
 }
 
-const isEmailValid = emailElement => {
+const isEmailValid = email => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(emailElement).toLowerCase());
+    return re.test(String(email).toLowerCase());
 };
+
+function isEmailAvailable(email) {
+    let emailFree = false;
+
+    fetch('https://socialmediaapp-ugrr.onrender.com/register')
+        .then(response => {
+            if (!response.ok) {
+                console.log('Problem');
+                return;
+            }
+
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.length) {
+                console.log('working?');
+                for (let i = 0; i < data.length; i++) {
+                    const user = data[i];
+
+                    if (email === user.email) {
+                        console.log('Email already exists!');
+                        emailFree = false;
+                        break;
+                    } else {
+                        console.log('Email Available');
+                        emailFree = true;
+                    }
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    return emailFree;
+}
+
 
 const isPasswordValid = element => {
     const password = element.value;
@@ -158,6 +198,8 @@ const validateInputs = () => {
         setError(emailElement, 'Email address is required');
     } else if (!isEmailValid(email)) {
         setError(emailElement, 'Provide a valid email');
+    } else if (!isEmailAvailable(email)) {
+        setError(emailElement, 'Email address already belongs to an account!');
     } else {
         user.email = email;
         setSuccess(emailElement);
