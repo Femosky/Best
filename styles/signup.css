@@ -71,6 +71,18 @@
   height: 13px;
 }
 
+/* debugging colours */
+
+.green {
+  color: green;
+}
+.blue {
+  color: blue;
+}
+.red {
+  color: red;
+}
+
 /* main */
 
 .primary-header {

@@ -1,72 +1,74 @@
 const form = document.getElementById('form');
 
-const firstName = document.getElementById('first-name');
-const lastName = document.getElementById('last-name');
+const firstNameElement = document.getElementById('first-name');
+const lastNameElement = document.getElementById('last-name');
 
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirm-password');
+const emailElement = document.getElementById('email');
+const passwordElement = document.getElementById('password');
+const confirmPasswordElement = document.getElementById('confirm-password');
 
 const debugOutput = document.querySelector('.debug-output');
 const debugOutput1 = document.querySelector('.debug-output-1');
 const debugOutput2 = document.querySelector('.debug-output-2');
 const debugOutputError = document.querySelector('.debug-output-error');
 
+let user = {};
 let passwordCounter = false;
 
 const validateFirstName = () => {
-    const firstNameValue = firstName.value.trim();
-    if (firstNameValue === '') {
-        setError(firstName, 'First name is required');
+    const firstName = firstNameElement.value.trim();
+    if (firstName === '') {
+        setError(firstNameElement, 'First name is required');
     } else {
-        setSuccess(firstName);
+        setSuccess(firstNameElement);
     }
 };
 
 const validateLastName = () => {
-    const lastNameValue = lastName.value.trim();
-    if (lastNameValue === '') {
-        setError(lastName, 'Last name is required');
+    const lastName = lastNameElement.value.trim();
+    if (lastName === '') {
+        setError(lastNameElement, 'Last name is required');
     } else {
-        setSuccess(lastName);
+        setSuccess(lastNameElement);
     }
 };
 
 const validateEmail = () => {
-    const emailValue = email.value.trim();
-    if (emailValue === '') {
-        setError(email, 'Email address is required');
-    } else if (!isEmailValid(emailValue)) {
-        setError(email, 'Provide a valid email');
+    const email = emailElement.value.trim();
+    if (email === '') {
+        setError(emailElement, 'Email address is required');
+    } else if (!isEmailValid(email)) {
+        setError(emailElement, 'Provide a valid email');
     } else {
-        setSuccess(email);
+        setSuccess(emailElement);
     }
 };
 
 const validatePassword = () => {
-    isPasswordValid(password);
+    passwordCriteria = isPasswordValid(passwordElement);
     validateConfirmPassword();
 };
 
 const validateConfirmPassword = () => {
-    const confirmPasswordValue = confirmPassword.value.trim();
-    const passwordValue = password.value.trim();
+    const password = passwordElement.value.trim();
+    const confirmPassword = confirmPasswordElement.value.trim();
 
-    if (confirmPasswordValue === '') {
-        setError(confirmPassword, 'Please confirm your password');
-    } else if (confirmPasswordValue !== passwordValue) {
-        setError(confirmPassword, 'Passwords do not match');
+    if (confirmPassword === '') {
+        setError(confirmPasswordElement, 'Please confirm your password');
+    } else if (confirmPassword !== password) {
+        setError(confirmPasswordElement, 'Passwords do not match');
     } else {
-        setSuccess(confirmPassword);
+        setSuccess(confirmPasswordElement);
     }
 };
 
-firstName.addEventListener('keyup', validateFirstName);
-lastName.addEventListener('keyup', validateLastName);
-email.addEventListener('keyup', validateEmail);
-password.addEventListener('keyup', validatePassword);
-confirmPassword.addEventListener('keyup', validateConfirmPassword);
+firstNameElement.addEventListener('keyup', validateFirstName);
+lastNameElement.addEventListener('keyup', validateLastName);
+emailElement.addEventListener('keyup', validateEmail);
+passwordElement.addEventListener('keyup', validatePassword);
+confirmPasswordElement.addEventListener('keyup', validateConfirmPassword);
 
+// submit userData to sign up
 form.addEventListener('submit', e => {
     e.preventDefault();
     
@@ -93,31 +95,31 @@ const setSuccess = element => {
     // window.location.href = 'verify-email.html';
 }
 
-const isEmailValid = email => {
+const isEmailValid = emailElement => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    return re.test(String(emailElement).toLowerCase());
 };
 
 const isPasswordValid = element => {
-    const passwordValue = element.value;
+    const password = element.value;
 
-    if (passwordValue === '') {
-        setError(password, 'Password is required');
+    if (password === '') {
+        setError(passwordElement, 'Password is required');
         return false;
-    } else if (passwordValue.length < 8) {
-        setError(password, 'Password must be at least 8 characters');
+    } else if (password.length < 8) {
+        setError(passwordElement, 'Password must be at least 8 characters');
         return false;
-    } else if (!/[A-Z]/.test(passwordValue)) {
-        setError(password, 'Password must contain at least a capital letter');
+    } else if (!/[A-Z]/.test(password)) {
+        setError(passwordElement, 'Password must contain at least a capital letter');
         return false;
-    } else if (!/\d/.test(passwordValue)) {
-        setError(password, 'Password must contain at least a number');
+    } else if (!/\d/.test(password)) {
+        setError(passwordElement, 'Password must contain at least a number');
         return false;
-    } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(passwordValue)) {
-        setError(password, 'Password must contain at least a special character');
+    } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
+        setError(passwordElement, 'Password must contain at least a special character');
         return false;
     } else {
-        setSuccess(password);
+        setSuccess(passwordElement);
         return true;
     }
 };
@@ -125,60 +127,59 @@ const isPasswordValid = element => {
 // main function - to validate user sign up inputs
 
 const validateInputs = () => {
-    const firstNameValue = firstName.value.trim();
-    const lastNameValue = lastName.value.trim();
-    const emailValue = email.value.trim();
-    const passwordValue = password.value.trim();
-    const confirmPasswordValue = confirmPassword.value.trim();
+    const firstName = firstNameElement.value.trim();
+    const lastName = lastNameElement.value.trim();
+    const email = emailElement.value.trim();
+    const password = passwordElement.value.trim();
+    const confirmPassword = confirmPasswordElement.value.trim();
 
     let firstNameCriteria = false;
     let lastNameCriteria = false;
     let emailCriteria = false;
     let passwordCriteria = false;
 
-    let userData = {};
-    
-    if (firstNameValue === '') {
-        setError(firstName, 'First name is required');
+    if (firstName === '') {
+        setError(firstNameElement, 'First name is required');
     } else {
-        userData.firstNameValue = firstNameValue;
-        setSuccess(firstName);
+        user.firstName = firstName;
+        setSuccess(firstNameElement);
         firstNameCriteria = true;
     }
     
-    if (lastNameValue === '') {
-        setError(lastName, 'Last name is required');
+    if (lastName === '') {
+        setError(lastNameElement, 'Last name is required');
     } else {
-        userData.lastNameValue = lastNameValue;
-        setSuccess(lastName);
+        user.lastName = lastName;
+        setSuccess(lastNameElement);
         lastNameCriteria = true;
     }
     
-    if (emailValue === '') {
-        setError(email, 'Email address is required');
-    } else if (!isEmailValid(emailValue)) {
-        setError(email, 'Provide a valid email');
+    if (email === '') {
+        setError(emailElement, 'Email address is required');
+    } else if (!isEmailValid(email)) {
+        setError(emailElement, 'Provide a valid email');
     } else {
-        userData.emailValue = emailValue;
-        setSuccess(email);
+        user.email = email;
+        setSuccess(emailElement);
         emailCriteria = true;
     }
     
-    if (!isPasswordValid(password)) {
-        setError(confirmPassword, 'Please choose a correct password');
+    if (!isPasswordValid(passwordElement)) {
+        setError(confirmPasswordElement, 'Please choose a correct password');
     } else {
-        if (confirmPasswordValue === '') {
-            setError(confirmPassword, 'Please confirm your password');
-        } else if (confirmPasswordValue !== passwordValue) {
-            setError(confirmPassword, 'Passwords do not match');
+        if (confirmPassword === '') {
+            setError(confirmPasswordElement, 'Please confirm your password');
+        } else if (confirmPassword !== password) {
+            setError(confirmPasswordElement, 'Passwords do not match');
         } else {
-            setSuccess(confirmPassword);
+            user.password = password;
+            setSuccess(confirmPasswordElement);
             passwordCriteria = true;
         }
     }
     
     if (firstNameCriteria && lastNameCriteria && emailCriteria && passwordCriteria) {
-        window.location.href = 'verify-email.html';
+        // window.location.href = 'verify-email.html';
         
         fetch('https://socialmediaapp-ugrr.onrender.com/register', {
             method: 'POST',
@@ -186,28 +187,29 @@ const validateInputs = () => {
                 'accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(user)
         })
         .then(response => response.json())  // Parse the response
         .then(data => {
             // Handle the response from the server
-            console.log("Response from server:", data);
-            debugOutput1.innerHTML = data;
+            console.log("Response from server:", data)
+            debugOutput1.innerHTML = data.message
             // You can update your UI or perform any necessary actions here
         })
         .catch(error => {
             // Handle errors
-            console.error("Error:", error);
+            console.error("Error:", error)
+            debugOutputError.innerHTML = error.message
         });
         
     }
 
     debugOutput.innerHTML = `
     <p>Stored user info: </p>
-    <p>first name: ${userData.firstNameValue}</p>
-    <p>last name: ${userData.lastNameValue}</p>
-        <p>email: ${userData.emailValue}</p>
-        <p>password: ${userData.passwordValue}</p>
+    <p>first name: ${user.firstName}</p>
+    <p>last name: ${user.lastName}</p>
+        <p>email: ${user.email}</p>
+        <p>password: ${user.password}</p>
     `;
 };
 
