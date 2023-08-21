@@ -16,8 +16,8 @@ let user = {};
 let passwordCounter = false;
 
 const validateFirstName = () => {
-    const firstName = firstNameElement.value.trim();
-    if (firstName === '') {
+    const firstname = firstNameElement.value.trim();
+    if (firstname === '') {
         setError(firstNameElement, 'First name is required');
     } else {
         setSuccess(firstNameElement);
@@ -25,8 +25,8 @@ const validateFirstName = () => {
 };
 
 const validateLastName = () => {
-    const lastName = lastNameElement.value.trim();
-    if (lastName === '') {
+    const lastname = lastNameElement.value.trim();
+    if (lastname === '') {
         setError(lastNameElement, 'Last name is required');
     } else {
         setSuccess(lastNameElement);
@@ -127,8 +127,8 @@ const isPasswordValid = element => {
 // main function - to validate user sign up inputs
 
 const validateInputs = () => {
-    const firstName = firstNameElement.value.trim();
-    const lastName = lastNameElement.value.trim();
+    const firstname = firstNameElement.value.trim();
+    const lastname = lastNameElement.value.trim();
     const email = emailElement.value.trim();
     const password = passwordElement.value.trim();
     const confirmPassword = confirmPasswordElement.value.trim();
@@ -138,18 +138,18 @@ const validateInputs = () => {
     let emailCriteria = false;
     let passwordCriteria = false;
 
-    if (firstName === '') {
+    if (firstname === '') {
         setError(firstNameElement, 'First name is required');
     } else {
-        user.firstName = firstName;
+        user.firstname = firstname;
         setSuccess(firstNameElement);
         firstNameCriteria = true;
     }
     
-    if (lastName === '') {
+    if (lastname === '') {
         setError(lastNameElement, 'Last name is required');
     } else {
-        user.lastName = lastName;
+        user.lastname = lastname;
         setSuccess(lastNameElement);
         lastNameCriteria = true;
     }
@@ -206,10 +206,9 @@ const validateInputs = () => {
 
     debugOutput.innerHTML = `
     <p>Stored user info: </p>
-    <p>first name: ${user.firstName}</p>
-    <p>last name: ${user.lastName}</p>
+    <p>first name: ${user.firstname}</p>
+    <p>last name: ${user.lastname}</p>
         <p>email: ${user.email}</p>
         <p>password: ${user.password}</p>
     `;
 };
-
