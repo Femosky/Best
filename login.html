@@ -23,6 +23,10 @@
                 </div>
                 <div class="signup-form">
                     <form id="form" action="/">
+                        <div class="error-incorrect-details red"></div>
+                        <div class="error-correct-details green"></div>
+                        <div class="network-failure-message red"></div>
+                        <br>
                         <div class="input-control">
                             <label for="email">Email address</label>
                             <input id="email" type="text" placeholder="Enter your email address">
@@ -36,10 +40,13 @@
                         </div>
 
                         <button type="submit" class="button submit-button js-submit-button">Login</button>
-                        <p class="debug-output"></p>
                     </form>
 
+
                     <p class="debug-output"></p>
+                    <p class="debug-output-1 red"></p>
+                    <p class="debug-output-2 green"></p>
+                    <p class="debug-output-error blue"></p>
                 </div>
             </div>
         </div>

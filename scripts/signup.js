@@ -65,6 +65,7 @@ const validateConfirmPassword = () => {
     }
 };
 
+// onkeyup listeners to check validity of input from user
 firstNameElement.addEventListener('keyup', validateFirstName);
 lastNameElement.addEventListener('keyup', validateLastName);
 emailElement.addEventListener('keyup', validateEmail);
@@ -199,7 +200,9 @@ const validateInputs = () => {
                 setError(emailElement, `Email address already belongs to an account!`);
             } else {
                 console.log('Account created!');
-                window.location.href = 'verify-email.html';
+                setTimeout(function() {
+                    window.location.href = 'verify-email.html';
+                }, 3000);
                 // debugOutput2.innerHTML = data.message;
             }
         })
