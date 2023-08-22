@@ -11,6 +11,8 @@ const debugOutput = document.querySelector('.debug-output');
 const debugOutput1 = document.querySelector('.debug-output-1');
 const debugOutput2 = document.querySelector('.debug-output-2');
 const debugOutputError = document.querySelector('.debug-output-error');
+const networkFailureMessage = document.querySelector('.network-failure-message');
+
 
 let user = {};
 let passwordCounter = false;
@@ -40,8 +42,6 @@ const validateEmail = () => {
         setError(emailElement, 'Email address is required');
     } else if (!isEmailValid(email)) {
         setError(emailElement, 'Provide a valid email');
-    } else if (!isEmailAvailable(email)) {
-        setError(emailElement, 'Email address already belongs to an account!');
     } else {
         setSuccess(emailElement);
     }
@@ -103,43 +103,6 @@ const isEmailValid = email => {
     return re.test(String(email).toLowerCase());
 };
 
-function isEmailAvailable(email) {
-    let emailFree = false;
-
-    fetch('https://socialmediaapp-ugrr.onrender.com/register')
-        .then(response => {
-            if (!response.ok) {
-                console.log('Problem');
-                return;
-            }
-
-            return response.json();
-        })
-        .then(data => {
-            if (data && data.length) {
-                console.log('working?');
-                for (let i = 0; i < data.length; i++) {
-                    const user = data[i];
-
-                    if (email === user.email) {
-                        console.log('Email already exists!');
-                        emailFree = false;
-                        break;
-                    } else {
-                        console.log('Email Available');
-                        emailFree = true;
-                    }
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    return emailFree;
-}
-
-
 const isPasswordValid = element => {
     const password = element.value;
 
@@ -198,8 +161,6 @@ const validateInputs = () => {
         setError(emailElement, 'Email address is required');
     } else if (!isEmailValid(email)) {
         setError(emailElement, 'Provide a valid email');
-    } else if (!isEmailAvailable(email)) {
-        setError(emailElement, 'Email address already belongs to an account!');
     } else {
         user.email = email;
         setSuccess(emailElement);
@@ -221,8 +182,6 @@ const validateInputs = () => {
     }
     
     if (firstNameCriteria && lastNameCriteria && emailCriteria && passwordCriteria) {
-        // window.location.href = 'verify-email.html';
-        
         fetch('https://socialmediaapp-ugrr.onrender.com/register', {
             method: 'POST',
             headers: {
@@ -235,17 +194,24 @@ const validateInputs = () => {
         .then(data => {
             // Handle the response from the server
             console.log("Response from server:", data)
-            debugOutput1.innerHTML = data.message
-            // You can update your UI or perform any necessary actions here
+            
+            if (data.message === 'User already exists!') {
+                setError(emailElement, `Email address already belongs to an account!`);
+            } else {
+                console.log('Account created!');
+                window.location.href = 'verify-email.html';
+                // debugOutput2.innerHTML = data.message;
+            }
         })
         .catch(error => {
-            // Handle errors
-            console.error("Error:", error)
-            debugOutputError.innerHTML = error.message
+            console.error("Error:", error.message);
+            networkFailureMessage.innerHTML = 'Network Failure. Try again';
         });
         
     }
 
+    // Code to print out what is stored in the user object that is sent to the server.
+    /*
     debugOutput.innerHTML = `
     <p>Stored user info: </p>
     <p>first name: ${user.firstname}</p>
@@ -253,4 +219,5 @@ const validateInputs = () => {
         <p>email: ${user.email}</p>
         <p>password: ${user.password}</p>
     `;
+    */
 };
