@@ -148,19 +148,9 @@ select {
     height: 13px;
 }
 
-/* debugging colours */
-
-.green {
-    color: green;
-}
-.blue {
-    color: blue;
-}
-.red {
-    color: red;
-}
-
 /* main */
+
+/* nav */
 
 .primary-header {
     border: 2px solid red;
@@ -177,16 +167,69 @@ select {
     width: 70%;
 }
 
+/* top half */
+
+.user-info-section {
+    display: flex;
+}
+.profile-pic {
+    width: 30%;
+    border: 2px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-pic img {
+    /* border: 2px solid red; */
+    width: 80%;
+}
+.user-profile-data {
+    border: 2px solid red;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.followings {
+    display: flex;
+    gap: 5rem;
+}
+
+/* bottom half */
+
+.user-posts-section {
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.posts {
+    border: 2px solid red;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1rem;
+}
+.posts div {
+    display: flex;
+    justify-content: center;
+    border-right: 2px solid black;
+}
+.user-posts {
+    border: 2px solid red;
+}
+
 /* General styling */
 
 .even-columns {
     display: grid;
     gap: 1rem;
+    grid-auto-flow: row;
 }
 
 @media (min-width: 47em) {
     .even-columns {
-        grid-auto-flow: column;
         grid-auto-columns: 1fr;
     }
 }
@@ -205,4 +248,7 @@ select {
 
 .margin-bottom-700 {
     margin-block-end: var(--size-700);
+}
+.fw-bold {
+    font-weight: var(--fw-bold);
 }
