@@ -11,8 +11,13 @@ const debugOutput = document.querySelector('.debug-output');
 const debugOutput1 = document.querySelector('.debug-output-1');
 const debugOutput2 = document.querySelector('.debug-output-2');
 const debugOutputError = document.querySelector('.debug-output-error');
-const networkFailureMessage = document.querySelector('.network-failure-message');
-
+const networkFailureMessage = document.querySelector(
+    '.network-failure-message'
+);
+const incorrectDetailsElement = document.querySelector(
+    '.error-incorrect-details'
+);
+const correctDetailsElement = document.querySelector('.error-correct-details');
 
 let user = {};
 let passwordCounter = false;
@@ -73,12 +78,11 @@ passwordElement.addEventListener('keyup', validatePassword);
 confirmPasswordElement.addEventListener('keyup', validateConfirmPassword);
 
 // submit userData to sign up
-form.addEventListener('submit', e => {
+form.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     validateInputs();
 });
-
 
 const setError = (element, message) => {
     const inputControl = element.parentElement;
@@ -87,9 +91,9 @@ const setError = (element, message) => {
     errorDisplay.innerText = message;
     inputControl.classList.add('error');
     inputControl.classList.remove('success');
-}
+};
 
-const setSuccess = element => {   
+const setSuccess = (element) => {
     const inputControl = element.parentElement;
     const errorDisplay = inputControl.querySelector('.error');
 
@@ -97,14 +101,15 @@ const setSuccess = element => {
     inputControl.classList.add('success');
     inputControl.classList.remove('error');
     // window.location.href = 'verify-email.html';
-}
+};
 
-const isEmailValid = email => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const isEmailValid = (email) => {
+    const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 };
 
-const isPasswordValid = element => {
+const isPasswordValid = (element) => {
     const password = element.value;
 
     if (password === '') {
@@ -114,13 +119,19 @@ const isPasswordValid = element => {
         setError(passwordElement, 'Password must be at least 8 characters');
         return false;
     } else if (!/[A-Z]/.test(password)) {
-        setError(passwordElement, 'Password must contain at least a capital letter');
+        setError(
+            passwordElement,
+            'Password must contain at least a capital letter'
+        );
         return false;
     } else if (!/\d/.test(password)) {
         setError(passwordElement, 'Password must contain at least a number');
         return false;
     } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
-        setError(passwordElement, 'Password must contain at least a special character');
+        setError(
+            passwordElement,
+            'Password must contain at least a special character'
+        );
         return false;
     } else {
         setSuccess(passwordElement);
@@ -149,7 +160,7 @@ const validateInputs = () => {
         setSuccess(firstNameElement);
         firstNameCriteria = true;
     }
-    
+
     if (lastname === '') {
         setError(lastNameElement, 'Last name is required');
     } else {
@@ -157,7 +168,7 @@ const validateInputs = () => {
         setSuccess(lastNameElement);
         lastNameCriteria = true;
     }
-    
+
     if (email === '') {
         setError(emailElement, 'Email address is required');
     } else if (!isEmailValid(email)) {
@@ -167,7 +178,7 @@ const validateInputs = () => {
         setSuccess(emailElement);
         emailCriteria = true;
     }
-    
+
     if (!isPasswordValid(passwordElement)) {
         setError(confirmPasswordElement, 'Please choose a correct password');
     } else {
@@ -181,36 +192,48 @@ const validateInputs = () => {
             passwordCriteria = true;
         }
     }
-    
-    if (firstNameCriteria && lastNameCriteria && emailCriteria && passwordCriteria) {
+
+    if (
+        firstNameCriteria &&
+        lastNameCriteria &&
+        emailCriteria &&
+        passwordCriteria
+    ) {
         fetch('https://socialmediaapp-ugrr.onrender.com/register', {
             method: 'POST',
             headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
+                accept: 'application/json',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(user),
         })
-        .then(response => response.json())  // Parse the response
-        .then(data => {
-            // Handle the response from the server
-            console.log("Response from server:", data)
-            
-            if (data.message === 'User already exists!') {
-                setError(emailElement, `Email address already belongs to an account!`);
-            } else {
-                console.log('Account created!');
-                setTimeout(function() {
-                    window.location.href = 'verify-email.html';
-                }, 3000);
-                // debugOutput2.innerHTML = data.message;
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error.message);
-            networkFailureMessage.innerHTML = 'Network Failure. Try again';
-        });
-        
+            .then((response) => response.json()) // Parse the response
+            .then((data) => {
+                // Handle the response from the server
+                console.log('Response from server:', data);
+
+                if (data.message === 'User already exists!') {
+                    setError(emailElement, '');
+                    incorrectDetailsElement.innerHTML =
+                        'Email address already exists!';
+                } else {
+                    console.log('Account created!');
+
+                    incorrectDetailsElement.innerHTML = '';
+                    correctDetailsElement.innerHTML = 'Account created!';
+
+                    setSuccess(emailElement);
+
+                    setTimeout(function () {
+                        window.location.href = 'verify-email.html';
+                    }, 3000);
+                    // debugOutput2.innerHTML = data.message;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error.message);
+                networkFailureMessage.innerHTML = 'Network Failure. Try again';
+            });
     }
 
     // Code to print out what is stored in the user object that is sent to the server.
