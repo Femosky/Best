@@ -1,77 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up | Best</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/signup.css">
-    <script src="scripts/signup.js" defer></script>
-</head>
-<body>
-    <header class="primary-header">
-        <a href="home.html"><p class="logo">BEST</p></a>
-        <div class="cta">
-            <a href="login.html"><button class="button nav-login-button">Login</button></a>
-            <a href="signup.html"><button class="button nav-signup-button">Sign up</button></a>
-        </div>
-    </header>
-    <section class="padding-block-900">
-        <div class="container">
-            <div class="even-columns">
-                <div class="phone-screen">
-                    <!-- <img src="images/model-one-iphone.png" alt=""> -->
-                </div>
-                <div class="signup-form">
-                    <form id="form" action="/">
-                        <div class="network-failure-message red"></div>
-                        <br>
-                        <div class="input-control">
-                            <label for="firstname">First name</label>
-                            <input id="first-name" name="firstname" type="text" placeholder="First name">
-                            <div class="error"></div>
-                        </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign up | Best</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="styles/signup.css" />
+        <script src="scripts/signup.js" defer></script>
+    </head>
+    <body>
+        <header class="primary-header">
+            <a href="home.html"><p class="logo">BEST</p></a>
+            <div class="cta">
+                <a href="login.html"
+                    ><button class="button nav-login-button">Login</button></a
+                >
+                <a href="signup.html"
+                    ><button class="button nav-signup-button">
+                        Sign up
+                    </button></a
+                >
+            </div>
+        </header>
+        <section class="padding-block-900">
+            <div class="container">
+                <div class="even-columns">
+                    <div class="phone-screen">
+                        <img src="images/model-one-iphone.png" alt="" />
+                    </div>
+                    <div class="signup-form">
+                        <form id="form" action="/">
+                            <div class="network-failure-message red"></div>
+                            <br />
+                            <div class="input-control">
+                                <label for="firstname">First name</label>
+                                <input
+                                    id="first-name"
+                                    name="firstname"
+                                    type="text"
+                                    placeholder="First name"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <div class="input-control">
-                            <label for="lastname">Last name</label>
-                            <input id="last-name" name="lastname" type="text" placeholder="Last name">
-                            <div class="error"></div>
-                        </div>
+                            <div class="input-control">
+                                <label for="lastname">Last name</label>
+                                <input
+                                    id="last-name"
+                                    name="lastname"
+                                    type="text"
+                                    placeholder="Last name"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <div class="input-control">
-                            <label for="email">Email address</label>
-                            <input id="email" type="text" placeholder="Enter your email address">
-                            <div class="error"></div>
-                        </div>
+                            <div class="input-control">
+                                <label for="email">Email address</label>
+                                <input
+                                    id="email"
+                                    type="text"
+                                    placeholder="Enter your email address"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <div class="input-control">
-                            <label for="password">Password</label>
-                            <input id="password" type="password" placeholder="••••••••••••">
-                            <div class="error"></div>
-                        </div>
+                            <div class="input-control">
+                                <label for="password">Password</label>
+                                <input
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••••••"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <div class="input-control">
-                            <label for="password">Confirm password</label>
-                            <input id="confirm-password" type="password" placeholder="••••••••••••">
-                            <div class="error"></div>
-                        </div>
+                            <div class="input-control">
+                                <label for="password">Confirm password</label>
+                                <input
+                                    id="confirm-password"
+                                    type="password"
+                                    placeholder="••••••••••••"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <button type="submit" class="button submit-button js-submit-button">Sign up</button>
-                    </form>
+                            <button
+                                type="submit"
+                                class="button submit-button js-submit-button"
+                            >
+                                Sign up
+                            </button>
+                        </form>
 
-                    <p class="debug-output"></p>
-                    <p class="debug-output-1 red"></p>
-                    <p class="debug-output-2 green"></p>
-                    <p class="debug-output-error blue"></p>
+                        <p class="debug-output"></p>
+                        <p class="debug-output-1 red"></p>
+                        <p class="debug-output-2 green"></p>
+                        <p class="debug-output-error blue"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</body>
+        </section>
+    </body>
 </html>

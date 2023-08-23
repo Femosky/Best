@@ -1,55 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Best</title>
-    <link rel="stylesheet" href="styles/login.css">
-    <script src="scripts/login.js" defer></script>
-</head>
-<body>
-    <header class="primary-header">
-        <a href="home.html"><p class="logo">BEST</p></a>
-        <div class="cta">
-            <a href="login.html"><button class="button nav-login-button">Login</button></a>
-            <a href="signup.html"><button class="button nav-signup-button">Sign up</button></a>
-        </div>
-    </header>
-    <section class="padding-block-900">
-        <div class="container">
-            <div class="even-columns">
-                <div class="phone-screen">
-                    <!-- <img src="images/iPhone.png" alt=""> -->
-                </div>
-                <div class="signup-form">
-                    <form id="form" action="/">
-                        <div class="error-incorrect-details red"></div>
-                        <div class="error-correct-details green"></div>
-                        <div class="network-failure-message red"></div>
-                        <br>
-                        <div class="input-control">
-                            <label for="email">Email address</label>
-                            <input id="email" type="text" placeholder="Enter your email address">
-                            <div class="error"></div>
-                        </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login | Best</title>
+        <link rel="stylesheet" href="styles/login.css" />
+        <script src="scripts/login.js" defer></script>
+    </head>
+    <body>
+        <header class="primary-header">
+            <a href="home.html"><p class="logo">BEST</p></a>
+            <div class="cta">
+                <a href="login.html"
+                    ><button class="button nav-login-button">Login</button></a
+                >
+                <a href="signup.html"
+                    ><button class="button nav-signup-button">
+                        Sign up
+                    </button></a
+                >
+            </div>
+        </header>
+        <section class="padding-block-900">
+            <div class="container">
+                <div class="even-columns">
+                    <div class="phone-screen">
+                        <img src="images/model-one-iphone.png" alt="" />
+                    </div>
+                    <div class="signup-form">
+                        <form id="form" action="/">
+                            <div class="error-incorrect-details red"></div>
+                            <div class="error-correct-details green"></div>
+                            <div class="network-failure-message red"></div>
+                            <br />
+                            <div class="input-control">
+                                <label for="email">Email address</label>
+                                <input
+                                    id="email"
+                                    type="text"
+                                    placeholder="Enter your email address"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <div class="input-control">
-                            <label for="password">Password</label>
-                            <input id="password" type="password" placeholder="••••••••••••">
-                            <div class="error"></div>
-                        </div>
+                            <div class="input-control">
+                                <label for="password">Password</label>
+                                <input
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••••••"
+                                />
+                                <div class="error"></div>
+                            </div>
 
-                        <button type="submit" class="button submit-button js-submit-button">Login</button>
-                    </form>
+                            <button
+                                type="submit"
+                                class="button submit-button js-submit-button"
+                            >
+                                Login
+                            </button>
+                        </form>
 
-
-                    <p class="debug-output"></p>
-                    <p class="debug-output-1 red"></p>
-                    <p class="debug-output-2 green"></p>
-                    <p class="debug-output-error blue"></p>
+                        <p class="debug-output"></p>
+                        <p class="debug-output-1 red"></p>
+                        <p class="debug-output-2 green"></p>
+                        <p class="debug-output-error blue"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</body>
+        </section>
+    </body>
 </html>
