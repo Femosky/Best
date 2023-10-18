@@ -1,4 +1,7 @@
 # Best
+
+### **NOTE**: This project has been discontinued but started using react-ts. It has been renamed to "Best-old" and the new one is called "Best".
+
 Social media app to share your best pics with your besties!
 
 This project is to sharpen and put to show my newly acquired skills in HTML, CSS, and JavaScript in part of working towards my goal of becoming a frontEnd developer by the end of 2023.
