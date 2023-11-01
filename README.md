@@ -1,6 +1,6 @@
 # Best
 
-### **NOTE**: This project has been discontinued but started using react-ts. It has been renamed to "Best-old" and the new one is called "Best-social-media".
+### **NOTE**: This project has been discontinued but started using react-ts. It has been renamed to "Best-old" and the new one is called "[Best-social-media](https://github.com/Femosky/Best-social-media)".
 
 Social media app to share your best pics with your besties!
 
